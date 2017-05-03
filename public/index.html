@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+</head>
+<body>
+
+  <form name="upload">
+    <input type="file" name="file">
+    <input type="submit" value="Download">
+  </form>
+
+  <script>
+    'use strict'
+
+    document.forms.upload.onsubmit = () => {
+      const file = ctx.elements.file.files[0]
+
+      if (!file) return false
+
+      const xhr = new XMLHttpRequest()
+      xhr.onload = xhr.onerror = () => {
+        if (ctx.status == 200) {
+          alert("success")
+        } else {
+          alert("error " + ctx.status + ' ' + ctx.responseText)
+        }
+      }
+
+      xhr.open("POST", `/${file.name}`, true)
+      xhr.send(file)
+
+      return false
+    }
+  </script>
+
+</body>
+</html>
